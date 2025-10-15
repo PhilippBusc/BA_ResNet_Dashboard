@@ -6,6 +6,55 @@ import itertools
 import math
 import matplotlib.pyplot as plt
 
+import streamlit as st
+import matplotlib as mpl
+
+def sync_streamlit_theme_to_mpl():
+    # read active Streamlit theme
+    base   = st.get_option("theme.base")                     # "light" | "dark"
+    primary= st.get_option("theme.primaryColor")
+    bg     = st.get_option("theme.backgroundColor")
+    sbg    = st.get_option("theme.secondaryBackgroundColor")
+    text   = st.get_option("theme.textColor")
+    font   = st.get_option("theme.font")                     # "sans serif" (default), "serif", "monospace"
+
+    # map Streamlit font -> Matplotlib family
+    family = {
+        "sans serif": "sans-serif",
+        "serif": "serif",
+        "monospace": "monospace",
+    }.get(font, "sans-serif")
+
+    grid_color = "#D0D0D0" if base == "light" else "#3B3B3B"
+
+    mpl.rcParams.update({
+        # fonts
+        "font.family": family,
+        "axes.titlesize": 12,
+        #"axes.titleweight": "semibold",
+        "axes.labelsize": 11,
+        "xtick.labelsize": 10,
+        "ytick.labelsize": 10,
+
+        # colors from theme
+        #"figure.facecolor": bg,
+        #"axes.facecolor": bg,
+        #"savefig.facecolor": bg,
+
+        "axes.edgecolor": text,
+        "axes.labelcolor": text,
+        "xtick.color": text,
+        "ytick.color": text,
+        "text.color": text,
+
+        # grid/legend
+        #"axes.grid": True,
+       # "grid.color": grid_color,
+        "grid.alpha": 0.35,
+        #"legend.frameon": False,
+    })
+sync_streamlit_theme_to_mpl()
+
 st.set_page_config(page_title="ResNet Approximation", page_icon="📈")
 st.subheader("📈 ResNet-Approximation der sinus-Funktion")
 st.info("Dieses Dashboard dient als Ergänzung zur Bachelorarbeit **Beispielname**.\n"
@@ -130,7 +179,7 @@ with st.expander(expand_label, expanded=False):
                 st.rerun()
 
     with col5:
-        s     = st.number_input("Iterationen (s)", value= 1000, min_value= 2, max_value = max_num_epochs[0], help="Anzahl der Trainingsiterationen (für alle Modelle gleich).\n" "Wenn Sie **s** ändern und mit ENTER bestätigen, wird der Plot automatisch angepasst. Die Modelle müssen nicht erneut hinzugefügt werden")     
+        s     = st.number_input("Iterationen (s)", value= 1000, min_value= 2, max_value = max_num_epochs[0], help="Anzahl der Trainingsiterationen (für alle Modelle gleich).\n" "Wenn Sie **s** ändern und mit **ENTER** bestätigen, wird der Plot automatisch angepasst. Die Modelle müssen nicht erneut hinzugefügt werden")     
         if s > 1000 and s % 1000 != 0:
             s = s - s % 1000
             st.warning("Warnung: Die Anzahl der Iterationen ist größer als 1000 und nicht durch 1000 teilbar. Die Anzahl der Iterationen wird automatisch auf f{s} gesetzt. Die Kosten werden nicht für jede Iteration angezeigt, sondern nur für jede 1000ste Iteration.")
@@ -190,7 +239,7 @@ else:
 
 if st.session_state.extra_lines:
     fig, ax = plt.subplots()
-    ax.set_title("Die Kosten (loss) im Verlauf des Trainings", fontsize=12, pad=8, weight="semibold")
+    ax.set_title("Die Kosten (loss) im Verlauf des Trainings", fontsize=12, pad=8)
 
     for item in st.session_state.extra_lines:
         spec = item["spec"]
