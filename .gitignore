@@ -24,12 +24,10 @@ Thumbs.db
 .streamlit/config.toml
 
 # Data / models / artifacts (adjust to your needs)
-data/
+Data/*
+!Data/.gitkeep
+*.joblib
 *.pkl
-*.h5
-*.csv
-*.parquet
-*.npz
 
 # Logs
 logs/

@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="ResNet Approximation", page_icon="📈")
 st.subheader("📈 ResNet-Approximation von sinus(x)")
-main_path = "C:/Users/admin/Desktop/streamlit_test/"
+#main_path = "C:/Users/admin/Desktop/streamlit_test/"
+main_path = "Data/"
 all_losses_array = joblib.load(main_path + "all_losses_array.joblib")
 # Parameter options
 h_values = [0.01]
