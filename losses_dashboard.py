@@ -3,11 +3,11 @@ import numpy as np
 import joblib
 from pathlib import Path
 import itertools
+import math
 import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="ResNet Approximation", page_icon="📈")
 st.subheader("📈 ResNet-Approximation von sinus(x)")
-#main_path = "C:/Users/admin/Desktop/streamlit_test/"
 main_path = "Data/"
 all_losses_array = joblib.load(main_path + "all_losses_array.joblib")
 # Parameter options
@@ -36,10 +36,10 @@ selected_tuple = (h, M, L, epst, d, epo)
 
 
 
-h_idx = int(np.where(np.array(h_values) == h)[0])
-M_idx = int(np.where(np.array(M_values) == M)[0])
-L_idx = int(np.where(np.array(L_values) == L)[0])
-d_idx = int(np.where(np.array(d_values_input) == d)[0])
+h_idx = h_values.index(h)
+M_idx = M_values.index(M)
+L_idx = L_values.index(L)
+d_idx = d_values_input.index(d)
 
 if "M_idx" not in st.session_state:
     st.session_state.M_idx = []
@@ -196,7 +196,7 @@ if st.session_state.extra_lines:
         ax.plot(xplot, y_hat2[:len(xplot)], label=label)
 
 
-    import math
+    
 
     lines = ax.get_lines()
     handles, labels = ax.get_legend_handles_labels()
@@ -228,7 +228,7 @@ if st.session_state.extra_lines:
 
     ax.set_xlabel("Iteration"); ax.set_ylabel("Kosten (loss)")#; ax.legend()
 
-    st.pyplot(fig, use_container_width=False)
+    st.pyplot(fig, width = "content")
 
 
 
