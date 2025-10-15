@@ -7,7 +7,9 @@ import math
 import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="ResNet Approximation", page_icon="📈")
-st.subheader("📈 ResNet-Approximation von sinus(x)")
+st.subheader("📈 ResNet-Approximation der sinus-Funktion")
+st.info("Dieses Dashboard dient als Ergänzung zur Bachelorarbeit **Beispielname**.\n"
+        "Es visualisiert die Kosten im Verlauf des Trainings eines ResNet zur Approximation der sinus-Funktion für verschiedene Netzwerkarchitekturen (Breite und Tiefe), Dimensionen der Eingabedaten und Schrittweiten des Gradientenverfahrens.")
 main_path = "Data/"
 all_losses_array = joblib.load(main_path + "all_losses_array.joblib")
 # Parameter options
@@ -75,8 +77,9 @@ with st.expander(expand_label, expanded=False):
         else:
             st.toast("Keine neuen Modelle (evtl. Duplikate).", icon="ℹ️")
 
-    col1, col2, col3, col4, col5 = st.columns(5)
-
+    col5, col6 = st.columns(2)
+    col1, col2, col3, col4 = st.columns(4)
+    #col1, col2, col3, col4, col5 = st.columns(5)
     
     default_h = [h_values[st.session_state.h_idx[-1]]] if st.session_state.get("h_idx") else [h_values[0]]
     default_M = [M_values[st.session_state.M_idx[-1]]] if st.session_state.get("M_idx") else [M_values[0]]
@@ -100,30 +103,34 @@ with st.expander(expand_label, expanded=False):
 
     with col1:
         add_h = st.multiselect("Schrittweite (h)", options=h_values, default=st.session_state["add_h"], key="add_h", help = "Schrittweite des Gradientenverfahrens")
-        if st.button("Alle auswählen", key="all_h_btn"):
-            st.session_state["_all_h_trigger"] = True
-            st.rerun()
+        if set(add_h) != set(h_values):
+            if st.button("Alle auswählen", key="all_h_btn"):
+                st.session_state["_all_h_trigger"] = True
+                st.rerun()
 
     with col2:
         add_M = st.multiselect("Breite (M)", options=M_values, default=st.session_state["add_M"], key="add_M", help = "Breite des ResNet - Anzahl der Neuronen pro Schicht")
-        if st.button("Alle auswählen", key="all_M_btn"):
-            st.session_state["_all_M_trigger"] = True
-            st.rerun()
+        if set(add_M) != set(M_values):
+            if st.button("Alle auswählen", key="all_M_btn"):
+                st.session_state["_all_M_trigger"] = True
+                st.rerun()
 
     with col3:
         add_L = st.multiselect("Tiefe (L)", options=L_values, default=st.session_state["add_L"], key="add_L", help = "Tiefe des ResNet - Anzahl der Schichten")
-        if st.button("Alle auswählen", key="all_L_btn"):
-            st.session_state["_all_L_trigger"] = True
-            st.rerun()
+        if set(add_L) != set(L_values):
+            if st.button("Alle auswählen", key="all_L_btn"):
+                st.session_state["_all_L_trigger"] = True
+                st.rerun()
 
     with col4:
         add_d = st.multiselect("Dimension (d)", options=d_values_input, default=st.session_state["add_d"], key="add_d", help = "Dimension der Trainingsdaten")
-        if st.button("Alle auswählen", key="all_d_btn"):
-            st.session_state["_all_d_trigger"] = True
-            st.rerun()
+        if set(add_d) != set(d_values):
+            if st.button("Alle auswählen", key="all_d_btn"):
+                st.session_state["_all_d_trigger"] = True
+                st.rerun()
 
     with col5:
-        s     = st.number_input("Iterationen (s)", value= 1000, min_value= 2, max_value = max_num_epochs[0],format="%.1e", help="Anzahl der Trainingsiterationen (für alle Modelle gleich). \n Wenn Sie **s** ändern und mit ENTER bestätigen, wird der Plot automatisch angepasst. Die Modelle müssen nicht erneut hinzugefügt werden")     
+        s     = st.number_input("Iterationen (s)", value= 1000, min_value= 2, max_value = max_num_epochs[0], help="Anzahl der Trainingsiterationen (für alle Modelle gleich).\n" "Wenn Sie **s** ändern und mit ENTER bestätigen, wird der Plot automatisch angepasst. Die Modelle müssen nicht erneut hinzugefügt werden")     
         if s > 1000 and s % 1000 != 0:
             s = s - s % 1000
             st.warning("Warnung: Die Anzahl der Iterationen ist größer als 1000 und nicht durch 1000 teilbar. Die Anzahl der Iterationen wird automatisch auf f{s} gesetzt. Die Kosten werden nicht für jede Iteration angezeigt, sondern nur für jede 1000ste Iteration.")
