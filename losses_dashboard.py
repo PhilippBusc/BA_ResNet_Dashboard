@@ -60,19 +60,27 @@ st.subheader("📈 ResNet-Approximation der sinus-Funktion")
 st.info("Dieses Dashboard dient als Ergänzung zur Bachelorarbeit **Beispielname**.\n"
         "Es visualisiert die Kosten im Verlauf des Trainings eines ResNet zur Approximation der sinus-Funktion für verschiedene Netzwerkarchitekturen (Breite und Tiefe), Dimensionen der Eingabedaten und Schrittweiten des Gradientenverfahrens.")
 main_path = "Data/"
-all_losses_array = joblib.load(main_path + "all_losses_array.joblib")
+#all_losses_array = joblib.load(main_path + "all_losses_array.joblib")
+all_losses_array = joblib.load(main_path + "all_losses_array_0111.joblib")
 # Parameter options
-h_values = [0.01]
+# h_values = [0.01]
+# stop_values = [1e-10]
+# M_values = [1 , 2, 4, 6, 8]
+# L_values = [1, 2, 4, 6, 8]
+# d_values = [10, 20, 2, 4, 8]
+# max_num_epochs = [1000000]
+
+h_values = [0.2, 0.4, 0.6, 0.8] 
 stop_values = [1e-10]
-M_values = [1 , 2, 4, 6, 8]
-L_values = [1, 2, 4, 6, 8]
-d_values = [10, 20, 2, 4, 8]
-max_num_epochs = [1000000]
+M_values   = [1, 2, 4, 8, 20, 50, 100]
+L_values   = [1, 2, 4, 8, 20, 50, 100]
+d_values   = [2, 3, 5, 11]
+max_num_epochs = [100000]
 
 # All parameter combinations
 param_list = list(itertools.product(h_values, M_values, L_values, stop_values, d_values, max_num_epochs))
 
-d_values_input= [2, 4, 8, 10, 20]
+d_values_input = [2, 3, 5, 11]#d_values_input= [2, 4, 8, 10, 20]
 # Default input   
 h = h_values[0]
 M = M_values[0]
@@ -82,7 +90,7 @@ s = 1000
 
 
 epst  = stop_values[0]
-epo   = 1000000
+epo   = 100000 #1000000
 selected_tuple = (h, M, L, epst, d, epo) 
 
 
