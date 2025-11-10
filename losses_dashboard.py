@@ -61,7 +61,8 @@ st.info("Dieses Dashboard dient als Ergänzung zur Bachelorarbeit **Beispielname
         "Es visualisiert die Kosten im Verlauf des Trainings eines ResNet zur Approximation der sinus-Funktion für verschiedene Netzwerkarchitekturen (Breite und Tiefe), Dimensionen der Eingabedaten und Schrittweiten des Gradientenverfahrens.")
 main_path = "Data/"
 #all_losses_array = joblib.load(main_path + "all_losses_array.joblib")
-all_losses_array = joblib.load(main_path + "all_losses_array_0111.joblib")
+all_losses_array = joblib.load(main_path + "all_losses_list_0111.joblib")
+all_losses_array = np.array(all_losses_array)
 # Parameter options
 # h_values = [0.01]
 # stop_values = [1e-10]
