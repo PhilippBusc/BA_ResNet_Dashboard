@@ -111,7 +111,7 @@ if "extra_lines" not in st.session_state:
 # Default-Linie nur einmal hinzufügen
 if "add_state" not in st.session_state:
     st.session_state.add_state = True
-    label = f"h = {h}, M = {M}, L = {L}, d = {d}"
+    label = f"L = {L}, M = {M}, h = {h}, d = {d}"
     st.session_state.extra_lines.append({"label": label, "spec": selected_tuple})
 
 # --- Modelle hinzufügen ---
@@ -189,7 +189,7 @@ with st.expander(expand_label, expanded=False):
             "Dimension (d)",
             options=d_values_input,
             key="add_d",
-            help="Dimension der Trainingsdaten",
+            help="Dimension der Eingabedaten",
         )
         if set(add_d) != set(d_values):
             if st.button("Alle auswählen", key="all_d_btn"):
@@ -257,7 +257,7 @@ with st.expander(expand_label, expanded=False):
         added = 0
         for h_, M_, L_, d_ in itertools.product(sel_h, sel_M, sel_L, sel_d):
             new_spec = (h_, M_, L_, epst, d_, epo)
-            label = f"h = {h_}, M = {M_}, L = {L_}, d = {d_}"
+            label = f"L = {L_}, M = {M_}, h = {h_}, d = {d_}"
             if not any(item["spec"] == new_spec for item in st.session_state.extra_lines):
                 st.session_state.extra_lines.append({"label": label, "spec": new_spec})
                 added += 1
@@ -374,12 +374,11 @@ if st.session_state.extra_lines:
         "- **h** – Schrittweite des Gradientenverfahrens\n"
         "- **M** – Breite: Anzahl der Neuronen pro Schicht\n"
         "- **L** – Tiefe: Anzahl der Schichten\n"
-        "- **d** – Dimension der Trainingsdaten\n"
-        f"- Es werden Iterationen im Bereich **[{int(start_s)}, {int(s)}]** angezeigt."
+        "- **d** – Dimension der Eingabedaten\n"
     )
 else:
     st.warning(
         f"Fügen Sie über **{expand_label}** eine oder mehrere Netzwerkarchitekturen (Breite, Tiefe) "
-        "mit zugehöriger Dimension der Trainingsdaten und Schrittweite des Gradientenverfahrens hinzu. "
+        "mit zugehöriger Dimension der Eingabedaten und Schrittweite des Gradientenverfahrens hinzu. "
         "Die Kosten (loss) werden dann im Verlauf der Trainingsiterationen angezeigt."
     )
