@@ -380,5 +380,5 @@ else:
     st.warning(
         f"Fügen Sie über **{expand_label}** eine oder mehrere Netzwerkarchitekturen (Breite, Tiefe) "
         "mit zugehöriger Dimension der Eingabedaten und Schrittweite des Gradientenverfahrens hinzu. "
-        "Die Kosten (loss) werden dann im Verlauf der Trainingsiterationen angezeigt."
+        "Die Kosten werden dann im Verlauf der Trainingsiterationen angezeigt."
     )
